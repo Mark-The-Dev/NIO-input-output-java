@@ -13,7 +13,10 @@ public class Demo2 {
 
             byte[] outputBytes = "Hello World!".getBytes();
             // wraps byte array into buffer
-            ByteBuffer buffer = ByteBuffer.wrap(outputBytes);
+            ByteBuffer buffer = ByteBuffer.allocate(outputBytes.length);
+            buffer.put(outputBytes);
+
+            buffer.flip();
 
             int numBytes = binChannel.write(buffer);
             System.out.println("numBytes written was: " + numBytes);
@@ -58,7 +61,12 @@ public class Demo2 {
             System.out.println(intBuffer.getInt(0));
             intBuffer.flip();
             numBytesRead = channel.read(intBuffer);
+            intBuffer.flip();
+
+            // absolute read does not change the buffers position.
             System.out.println(intBuffer.getInt(0));
+            System.out.println(intBuffer.getInt());
+
 
 
             // Relative read
