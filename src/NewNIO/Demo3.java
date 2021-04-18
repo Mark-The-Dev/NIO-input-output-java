@@ -71,6 +71,37 @@ public class Demo3 {
 //            System.out.println("Int 3 = " + readBuffer.getInt());
 
 
+            byte[] outputString = "Hello, World!".getBytes();
+            long str1Pos = 0;
+            long newInt1Pos = outputString.length;
+            long newInt2Pos = newInt1Pos + Integer.BYTES;
+            byte[] outputString2 = "Nice to meet you".getBytes();
+            long str2Pos = newInt2Pos + Integer.BYTES;
+            long newInt3Pos = str2Pos + outputString2.length;
+
+            ByteBuffer intBuffer = ByteBuffer.allocate(Integer.BYTES);
+            intBuffer.putInt(245);
+            intBuffer.flip();
+            binChannel.position(newInt1Pos);
+            binChannel.write(intBuffer);
+
+            intBuffer.flip();
+            intBuffer.putInt(-98745);
+            intBuffer.flip();
+            binChannel.position(newInt2Pos);
+            binChannel.write(intBuffer);
+
+            intBuffer.flip();
+            intBuffer.putInt(1000);
+            intBuffer.flip();
+            binChannel.position(newInt3Pos);
+            binChannel.write(intBuffer);
+
+            binChannel.position(str1Pos);
+            binChannel.write(ByteBuffer.wrap(outputString));
+            binChannel.position(str2Pos);
+            binChannel.write(ByteBuffer.wrap(outputString2));
+
 
 
 
