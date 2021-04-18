@@ -14,19 +14,23 @@ public class Demo3 {
 
             ByteBuffer buffer = ByteBuffer.allocate(100);
 
-            byte[] outputBytes = "Hello World!".getBytes();
-            byte[] outputBytes2 = "Nice to meet you".getBytes();
-            buffer.put(outputBytes).putInt(245).putInt(-98745).put(outputBytes2).putInt(1000);
-            buffer.flip();
-
+            // chained puts
 //            byte[] outputBytes = "Hello World!".getBytes();
-//            buffer.put(outputBytes);
-//            buffer.putInt(245);
-//            buffer.putInt(-98745);
 //            byte[] outputBytes2 = "Nice to meet you".getBytes();
-//            buffer.put(outputBytes2);
-//            buffer.putInt(1000);
+//            buffer.put(outputBytes).putInt(245).putInt(-98745).put(outputBytes2).putInt(1000);
 //            buffer.flip();
+
+            byte[] outputBytes = "Hello World!".getBytes();
+            buffer.put(outputBytes);
+            long int1Pos = outputBytes.length;
+            buffer.putInt(245);
+            long int2Pos = int1Pos + Integer.BYTES;
+            buffer.putInt(-98745);
+            byte[] outputBytes2 = "Nice to meet you".getBytes();
+            buffer.put(outputBytes2);
+            long int3Pos = int2Pos + Integer.BYTES + outputBytes2.length;
+            buffer.putInt(1000);
+            buffer.flip();
 
             binChannel.write(buffer);
 
