@@ -33,6 +33,7 @@ public class Demo2 {
             numBytes = binChannel.write(intBuffer);
             System.out.println("numBytes written was: " + numBytes);
 
+            // IO way
 //            RandomAccessFile ra = new RandomAccessFile("data.dat", "rwd");
 //            byte[] b = new byte[outputBytes.length];
 //            ra.read(b);
@@ -51,7 +52,8 @@ public class Demo2 {
             buffer.flip();
             long numBytesRead = channel.read(buffer);
             if(buffer.hasArray()){
-                System.out.println("byteBuffer = " + new String(buffer.array()));
+                //System.out.println("byteBuffer = " + new String(buffer.array()));
+                System.out.println("byteBuffer = " + new String(outputBytes));
             }
 
             // Absolute Read
